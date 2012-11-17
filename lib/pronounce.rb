@@ -46,17 +46,7 @@ module Pronounce
     end
 
     def sonority(symbol)
-      @sonorance ||= {
-        'aspirate' => 0,
-        'stop' => 1,
-        'affricate' => 2,
-        'fricative' => 3,
-        'nasal' => 4,
-        'liquid' => 5,
-        'semivowel' => 6,
-        'vowel' => 7
-      }
-      @sonorance[Phone.all.find{|phone| phone.symbol == symbol[0..1]}.articulation]
+      Phone.all.find{|phone| phone.symbol == symbol[0..1]}.sonority
     end
 
   end
