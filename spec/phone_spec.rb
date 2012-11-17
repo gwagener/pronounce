@@ -52,16 +52,11 @@ module Pronounce
       end
     end
 
-    describe '#sonority' do
-      it 'returns the relative sonority of a phone' do
-        Phone.new('', 'stop').sonority.should == 1
-        Phone.new('', 'affricate').sonority.should == 2
-        Phone.new('', 'fricative').sonority.should == 3
-        Phone.new('', 'nasal').sonority.should == 4
-        Phone.new('', 'liquid').sonority.should == 5
-        Phone.new('', 'semivowel').sonority.should == 6
-        Phone.new('', 'vowel').sonority.should == 7
-      end
+    it 'is comparable based on sonority' do
+      Phone.new('', 'stop').should < Phone.new('', 'affricate')
+      Phone.new('', 'fricative').should <= Phone.new('', 'fricative')
+      Phone.new('', 'nasal').should >= Phone.new('', 'nasal')
+      Phone.new('', 'semivowel').should > Phone.new('', 'liquid')
     end
 
   end

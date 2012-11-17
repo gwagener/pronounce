@@ -42,11 +42,7 @@ module Pronounce
       return true if index == 0
 
       return false unless index < word.length - 1
-      sonority(word[index]) <= sonority(word[index+1]) && sonority(word[index]) < sonority(word[index-1])
-    end
-
-    def sonority(symbol)
-      Phone.find(symbol).sonority
+      Phone.find(word[index]) <= Phone.find(word[index+1]) && Phone.find(word[index]) < Phone.find(word[index-1])
     end
 
   end

@@ -1,5 +1,7 @@
 module Pronounce
   class Phone
+    include Comparable
+
     def initialize(symbol, articulation)
       @symbol = symbol
       @articulation = articulation
@@ -27,6 +29,10 @@ module Pronounce
 
     end
 
+    def <=>(phone)
+      self.class == phone.class ? self.sonority <=> phone.sonority : nil
+    end
+
     def eql?(phone)
       self.class.equal?(phone.class) && @symbol == phone.symbol
     end
@@ -35,6 +41,10 @@ module Pronounce
     def hash
       @symbol.hash
     end
+
+    protected
+
+    attr_reader :symbol
 
     def sonority
       @@sonorance ||= {
@@ -49,10 +59,6 @@ module Pronounce
       }
       @@sonorance[@articulation]
     end
-
-    protected
-
-    attr_reader :symbol
 
   end
 end
