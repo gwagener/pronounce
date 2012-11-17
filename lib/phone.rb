@@ -1,16 +1,30 @@
 module Pronounce
   class Phone
-    attr_reader :symbol
-
     def initialize(symbol, articulation)
       @symbol = symbol
       @articulation = articulation
     end
 
-    def self.all
-      @all ||= File.read("#{DATA_DIR}/cmudict/cmudict.#{CMUDICT_VERSION}.phones").
-                    split("\n").
-                    reduce([]){|phones, phone| symbol, articulation = *phone.split("\t"); phones << Phone.new(symbol, articulation) }
+    class << self
+      def all
+        self.phones.values
+      end
+
+      def find(symbol)
+        self.phones[symbol[0..1]]
+      end
+
+      protected
+
+      def phones
+        @phones ||= File.read("#{DATA_DIR}/cmudict/cmudict.#{CMUDICT_VERSION}.phones").
+                         split("\n").
+                         reduce({}) do |phones, phone|
+                           symbol, articulation = *phone.split("\t")
+                           phones.merge({symbol => Phone.new(symbol, articulation)})
+                         end
+      end
+
     end
 
     def eql?(phone)
@@ -35,6 +49,10 @@ module Pronounce
       }
       @@sonorance[@articulation]
     end
+
+    protected
+
+    attr_reader :symbol
 
   end
 end

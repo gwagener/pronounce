@@ -3,7 +3,7 @@ require_relative '../lib/phone'
 module Pronounce
   describe Phone do
     describe ".all" do
-      it 'lists all phones with manner of articulation' do
+      it 'lists all English phones' do
         Phone.all.should == [Phone.new('AA', 'vowel'),
                              Phone.new('AE', 'vowel'),
                              Phone.new('AH', 'vowel'),
@@ -43,6 +43,12 @@ module Pronounce
                              Phone.new('Y',  'semivowel'),
                              Phone.new('Z',  'fricative'),
                              Phone.new('ZH', 'fricative')]
+      end
+    end
+
+    describe '.find' do
+      it 'returns the corresponding Phone for the symbol' do
+        Phone.find('OY2').should == Phone.new('OY', 'vowel')
       end
     end
 

@@ -46,7 +46,7 @@ module Pronounce
     end
 
     def sonority(symbol)
-      Phone.all.find{|phone| phone.symbol == symbol[0..1]}.sonority
+      Phone.find(symbol).sonority
     end
 
   end
