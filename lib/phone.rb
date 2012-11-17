@@ -42,6 +42,10 @@ module Pronounce
       @symbol.hash
     end
 
+    def to_s
+      "#{@symbol} (#{@articulation})"
+    end
+
     protected
 
     attr_reader :symbol

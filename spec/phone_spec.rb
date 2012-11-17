@@ -52,6 +52,12 @@ module Pronounce
       end
     end
 
+    describe '#to_s' do
+      it 'includes the symbol and articulation' do
+        Phone.new('ZH', 'fricative').to_s.should == 'ZH (fricative)'
+      end
+    end
+
     it 'is comparable based on sonority' do
       Phone.new('', 'stop').should < Phone.new('', 'affricate')
       Phone.new('', 'fricative').should <= Phone.new('', 'fricative')
