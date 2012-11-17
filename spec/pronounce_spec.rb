@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../lib/pronounce'
+require_relative '../lib/pronounce'
 
 describe Pronounce do
   describe ".how_do_i_pronounce" do
@@ -30,49 +30,5 @@ describe Pronounce do
                                    "Z", "ZH"]
     end
   end
-  
-  describe ".phones" do
-    it "should list all phones with types" do
-      Pronounce.phones.should == {"AA" => "vowel",
-                                  "AE" => "vowel",
-                                  "AH" => "vowel",
-                                  "AO" => "vowel",
-                                  "AW" => "vowel",
-                                  "AY" => "vowel",
-                                  "B" => "stop",
-                                  "CH" => "affricate",
-                                  "D" => "stop",
-                                  "DH" => "fricative",
-                                  "EH" => "vowel",
-                                  "ER" => "vowel",
-                                  "EY" => "vowel",
-                                  "F" => "fricative",
-                                  "G" => "stop",
-                                  "HH" => "aspirate",
-                                  "IH" => "vowel",
-                                  "IY" => "vowel",
-                                  "JH" => "affricate",
-                                  "K" => "stop",
-                                  "L" => "liquid",
-                                  "M" => "nasal",
-                                  "N" => "nasal",
-                                  "NG" => "nasal",
-                                  "OW" => "vowel",
-                                  "OY" => "vowel",
-                                  "P" => "stop",
-                                  "R" => "liquid",
-                                  "S" => "fricative",
-                                  "SH" => "fricative",
-                                  "T" => "stop",
-                                  "TH" => "fricative",
-                                  "UH" => "vowel",
-                                  "UW" => "vowel",
-                                  "V" => "fricative",
-                                  "W" => "semivowel",
-                                  "Y" => "semivowel",
-                                  "Z" => "fricative",
-                                  "ZH" => "fricative"}
-    end
-  end
-  
+
 end

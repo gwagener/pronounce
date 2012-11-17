@@ -13,12 +13,6 @@ module Pronounce
                         split("\r\n")
     end
 
-    def phones
-      @phones ||= File.read("#{DATA_DIR}/cmudict/cmudict.#{CMUDICT_VERSION}.phones").
-                       split("\n").
-                       reduce({}){|phones, phone| phone, type = *phone.split("\t"); phones.merge({phone => type}) }
-    end
-
     private
 
     def build_pronuciation_dictionary
@@ -62,7 +56,7 @@ module Pronounce
         'semivowel' => 6,
         'vowel' => 7
       }
-      @sonorance[self.phones[symbol[0..1]]]
+      @sonorance[Phone.all.find{|phone| phone.symbol == symbol[0..1]}.articulation]
     end
 
   end
