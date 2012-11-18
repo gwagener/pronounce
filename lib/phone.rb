@@ -5,8 +5,20 @@ module Pronounce
     include Comparable
 
     def initialize(symbol, articulation)
+      @@sonorance ||= {
+        'aspirate' => 0, # this is a guess
+        'stop' => 1,
+        'affricate' => 2,
+        'fricative' => 3,
+        'nasal' => 4,
+        'liquid' => 5,
+        'semivowel' => 6,
+        'vowel' => 7
+      }
+
       @symbol = symbol
       @articulation = articulation
+      @sonority = @@sonorance[@articulation]
     end
 
     class << self
@@ -32,7 +44,7 @@ module Pronounce
     end
 
     def <=>(phone)
-      self.class == phone.class ? self.sonority <=> phone.sonority : nil
+      self.class == phone.class ? @sonority <=> phone.sonority : nil
     end
 
     def eql?(phone)
@@ -50,21 +62,7 @@ module Pronounce
 
     protected
 
-    attr_reader :symbol
-
-    def sonority
-      @@sonorance ||= {
-        'aspirate' => 0, # this is a guess
-        'stop' => 1,
-        'affricate' => 2,
-        'fricative' => 3,
-        'nasal' => 4,
-        'liquid' => 5,
-        'semivowel' => 6,
-        'vowel' => 7
-      }
-      @@sonorance[@articulation]
-    end
+    attr_reader :sonority, :symbol
 
   end
 end
