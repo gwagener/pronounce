@@ -4,23 +4,6 @@ module Pronounce
   class Phone
     include Comparable
 
-    def initialize(symbol, articulation)
-      @@sonorance ||= {
-        'aspirate' => 0, # this is a guess
-        'stop' => 1,
-        'affricate' => 2,
-        'fricative' => 3,
-        'nasal' => 4,
-        'liquid' => 5,
-        'semivowel' => 6,
-        'vowel' => 7
-      }
-
-      @symbol = symbol
-      @articulation = articulation
-      @sonority = @@sonorance[@articulation]
-    end
-
     class << self
       def all
         phones.values
@@ -71,6 +54,25 @@ module Pronounce
     protected
 
     attr_reader :sonority, :symbol
+
+    private
+
+    def initialize(symbol, articulation)
+      @@sonorance ||= {
+        'aspirate' => 0, # this is a guess
+        'stop' => 1,
+        'affricate' => 2,
+        'fricative' => 3,
+        'nasal' => 4,
+        'liquid' => 5,
+        'semivowel' => 6,
+        'vowel' => 7
+      }
+
+      @symbol = symbol
+      @articulation = articulation
+      @sonority = @@sonorance[@articulation]
+    end
 
   end
 end
