@@ -23,22 +23,30 @@ module Pronounce
 
     class << self
       def all
-        self.phones.values
+        phones.values
       end
 
       def find(symbol)
-        self.phones[symbol[0..1]]
+        phones[symbol[0..1]]
       end
 
-      protected
+      private
 
       def phones
-        @phones ||= File.read("#{DATA_DIR}/cmudict/cmudict.#{CMUDICT_VERSION}.phones").
-                         split("\n").
-                         reduce({}) do |phones, phone|
-                           symbol, articulation = *phone.split("\t")
-                           phones.merge({symbol => Phone.new(symbol, articulation)})
-                         end
+        @phones ||= parse_phones
+      end
+
+      def parse_phones
+        phones = {}
+        read_data.each do |line|
+          symbol, articulation = *line.strip.split("\t")
+          phones[symbol] = Phone.new(symbol, articulation)
+        end
+        phones
+      end
+
+      def read_data
+        File.readlines("#{DATA_DIR}/cmudict/cmudict.#{CMUDICT_VERSION}.phones")
       end
 
     end
