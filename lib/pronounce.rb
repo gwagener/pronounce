@@ -1,3 +1,5 @@
+require_relative 'phone'
+
 module Pronounce
   CMUDICT_VERSION = '0.7a'
   DATA_DIR = File.dirname(__FILE__) + '/../data'

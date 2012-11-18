@@ -1,3 +1,5 @@
+require_relative 'pronounce'
+
 module Pronounce
   class Phone
     include Comparable
@@ -34,7 +36,7 @@ module Pronounce
     end
 
     def eql?(phone)
-      self.class.equal?(phone.class) && @symbol == phone.symbol
+      self.class == phone.class && @symbol == phone.symbol
     end
     alias == eql?
 
