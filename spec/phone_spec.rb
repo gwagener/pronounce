@@ -50,5 +50,11 @@ module Pronounce
       end
     end
 
+    describe '#to_s' do
+      it 'includes the symbol and stress' do
+        Phone.create('OY2').to_s.should == 'OY2'
+      end
+    end
+
   end
 end

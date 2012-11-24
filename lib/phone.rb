@@ -11,7 +11,7 @@ module Pronounce
 
       def create(symbol)
         ensure_loaded
-        Pronounce.const_get(symbol[0..1]).new
+        Pronounce.const_get(symbol[0..1]).new symbol[2]
       end
 
       private
@@ -61,6 +61,14 @@ module Pronounce
         @sonority[articulation]
       end
 
+    end
+
+    def initialize(stress)
+      @stress = stress
+    end
+
+    def to_s
+      "#{self.class.name.split('::').last}#{@stress}"
     end
 
     private
