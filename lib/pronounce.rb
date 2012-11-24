@@ -44,7 +44,8 @@ module Pronounce
       return true if index == 0
 
       return false unless index < word.length - 1
-      Phone.find(word[index]) <= Phone.find(word[index+1]) && Phone.find(word[index]) < Phone.find(word[index-1])
+      Phone.create(word[index]) <= Phone.create(word[index+1]) &&
+      Phone.create(word[index]) < Phone.create(word[index-1])
     end
 
   end
