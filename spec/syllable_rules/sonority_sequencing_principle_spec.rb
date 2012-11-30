@@ -3,6 +3,7 @@ require 'spec_helper'
 module Pronounce::SyllableRules
   describe SonoritySequencingPrinciple do
     let(:test_word) { build_word ['OW', 'AA', 'NG', 'T', 'R', 'UW', 'F'] }
+    let(:consonant_consonant) { build_word ['Y', 'UW1', 'S', 'F', 'AH0', 'L'] }
     let(:final_vowel_vowel) { build_word ['HH', 'AH0', 'W', 'AY1', 'IY2'] }
     let(:final_consonant_vowel) { build_word ['AH0', 'G', 'L', 'OW1'] }
 
@@ -13,6 +14,10 @@ module Pronounce::SyllableRules
 
       it 'a final vowel following another vowel' do
         SonoritySequencingPrinciple.evaluate(final_vowel_vowel, 4).should be_true
+      end
+
+      it 'a consonant followed by another consonant of equal sonority' do
+        SonoritySequencingPrinciple.evaluate(consonant_consonant, 3).should be_true
       end
 
       it 'a sonority trough' do
