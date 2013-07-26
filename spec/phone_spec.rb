@@ -6,37 +6,56 @@ module Pronounce
     describe '.all' do
       it 'lists all English phones' do
         Phone.all.should == {
-          AA => Articulation[:vowel],     L  => Articulation[:liquid],
-          AE => Articulation[:vowel],     M  => Articulation[:nasal],
-          AH => Articulation[:vowel],     N  => Articulation[:nasal],
-          AO => Articulation[:vowel],     NG => Articulation[:nasal],
-          AW => Articulation[:vowel],     OW => Articulation[:vowel],
-          AY => Articulation[:vowel],     OY => Articulation[:vowel],
-          B  => Articulation[:stop],      P  => Articulation[:stop],
-          CH => Articulation[:affricate], R  => Articulation[:liquid],
-          D  => Articulation[:stop],      S  => Articulation[:fricative],
-          DH => Articulation[:fricative], SH => Articulation[:fricative],
-          EH => Articulation[:vowel],     T  => Articulation[:stop],
-          ER => Articulation[:vowel],     TH => Articulation[:fricative],
-          EY => Articulation[:vowel],     UH => Articulation[:vowel],
-          F  => Articulation[:fricative], UW => Articulation[:vowel],
-          G  => Articulation[:stop],      V  => Articulation[:fricative],
-          HH => Articulation[:aspirate],  W  => Articulation[:semivowel],
-          IH => Articulation[:vowel],     Y  => Articulation[:semivowel],
-          IY => Articulation[:vowel],     Z  => Articulation[:fricative],
-          JH => Articulation[:affricate], ZH => Articulation[:fricative],
-          K  => Articulation[:stop]
+          Phone.create('AA') => Articulation[:vowel],
+          Phone.create('AE') => Articulation[:vowel],
+          Phone.create('AH') => Articulation[:vowel],
+          Phone.create('AO') => Articulation[:vowel],
+          Phone.create('AW') => Articulation[:vowel],
+          Phone.create('AY') => Articulation[:vowel],
+          Phone.create('B')  => Articulation[:stop],
+          Phone.create('CH') => Articulation[:affricate],
+          Phone.create('D')  => Articulation[:stop],
+          Phone.create('DH') => Articulation[:fricative],
+          Phone.create('EH') => Articulation[:vowel],
+          Phone.create('ER') => Articulation[:vowel],
+          Phone.create('EY') => Articulation[:vowel],
+          Phone.create('F')  => Articulation[:fricative],
+          Phone.create('G')  => Articulation[:stop],
+          Phone.create('HH') => Articulation[:aspirate],
+          Phone.create('IH') => Articulation[:vowel],
+          Phone.create('IY') => Articulation[:vowel],
+          Phone.create('JH') => Articulation[:affricate],
+          Phone.create('K')  => Articulation[:stop],
+          Phone.create('L')  => Articulation[:liquid],
+          Phone.create('M')  => Articulation[:nasal],
+          Phone.create('N')  => Articulation[:nasal],
+          Phone.create('NG') => Articulation[:nasal],
+          Phone.create('OW') => Articulation[:vowel],
+          Phone.create('OY') => Articulation[:vowel],
+          Phone.create('P')  => Articulation[:stop],
+          Phone.create('R')  => Articulation[:liquid],
+          Phone.create('S')  => Articulation[:fricative],
+          Phone.create('SH') => Articulation[:fricative],
+          Phone.create('T')  => Articulation[:stop],
+          Phone.create('TH') => Articulation[:fricative],
+          Phone.create('UH') => Articulation[:vowel],
+          Phone.create('UW') => Articulation[:vowel],
+          Phone.create('V')  => Articulation[:fricative],
+          Phone.create('W')  => Articulation[:semivowel],
+          Phone.create('Y')  => Articulation[:semivowel],
+          Phone.create('Z')  => Articulation[:fricative],
+          Phone.create('ZH') => Articulation[:fricative]
         }
       end
     end
 
     describe '.create' do
-      it 'creates an instance of the matching type of Phone' do
-        Phone.create('OY2').should be_an_instance_of OY
+      it 'creates an instance of Phone' do
+        expect(Phone.create 'OY2').to be_an_instance_of Phone
       end
 
-      it 'fails if there is no matching, legal phone' do
-        expect { Phone.create('ZA') }.to raise_error NameError
+      it 'fails if symbol is not in Pronounce.symbols' do
+        expect { Phone.create 'ZA' }.to raise_error ArgumentError
       end
     end
 
@@ -57,16 +76,38 @@ module Pronounce
     describe '#eql?' do
       subject { Phone.create('AH') }
 
-      it 'is true for an instance of the same Phone' do
+      it 'is true for an instance of the same phone' do
         should eql Phone.create('AH')
       end
 
-      it 'is false for an instance of a different Phone' do
+      it 'is false for an instance of a different phone' do
         should_not eql Phone.create('UW')
       end
 
       it 'is false for a non-Phone' do
         should_not eql 'AH'
+      end
+    end
+
+    describe '#hash' do
+      subject { Phone.create('AH').hash }
+
+      it 'is the same for an instance of the same phone' do
+        expect(subject).to eq Phone.create('AH').hash
+      end
+
+      it 'is different for an instance of a different phone' do
+        expect(subject).to_not eq Phone.create('UW').hash
+      end
+
+      it 'is different for a non-Phone' do
+        expect(subject).to_not eq 'AH'.hash
+      end
+    end
+
+    describe '#inspect' do
+      it 'returns the name only' do
+        expect(Phone.create('AE2').inspect).to eq 'AE'
       end
     end
 
@@ -91,7 +132,7 @@ module Pronounce
     end
 
     describe '#to_s' do
-      it 'includes the symbol and stress' do
+      it 'includes the name and stress' do
         Phone.create('OY2').to_s.should == 'OY2'
       end
     end

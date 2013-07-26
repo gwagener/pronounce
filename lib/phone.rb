@@ -3,59 +3,66 @@ require 'articulation'
 require 'data_reader'
 
 module Pronounce
-  module Phone
+  class Phone
     SHORT_VOWELS = %w[AE AH EH IH UH]
 
     include Comparable
 
     class << self
       def all
-        phones.each_with_object({}) {|phone, all|
+        phone_constructors.values.each_with_object({}) {|fn, all|
+          phone = fn.call nil
           all[phone] = phone.articulation
         }
       end
 
       def create(symbol)
-        ensure_loaded
-        Pronounce.const_get(symbol[0..1]).new symbol[2]
+        name = symbol[0..1]
+        if phone_constructors.has_key? name
+          phone_constructors[name].call symbol[2]
+        else
+          raise ArgumentError.new 'invalid symbol'
+        end
       end
 
       private
 
-      def phones
-        @phones ||= parse_phones
-      end
-      alias ensure_loaded phones
-
-      def parse_phones
-        DataReader.phones.map {|line|
-          create_phone_class *line.strip.split("\t")
-        }
-      end
-
-      def create_phone_class(symbol, articulation)
-        Pronounce.const_set symbol, Class.new {
-          include Phone
-          define_singleton_method(:articulation) do
-            Articulation[articulation.to_sym]
-          end
+      def phone_constructors
+        @fns ||= DataReader.phones.each_with_object({}) {|line, fns|
+          name, articulation = *line.strip.split("\t")
+          fns[name] = ->(stress) { Phone.new name, articulation, stress }
         }
       end
 
     end
 
-    attr_reader :stress
+    attr_reader :articulation, :stress
 
-    def initialize(stress)
+    def initialize(name, articulation, stress)
+      @name = name
+      @articulation = Articulation[articulation.to_sym]
       @stress = stress.to_i if stress
     end
 
+    def <=>(phone)
+      articulation <=> phone.articulation if Phone === phone
+    end
+
     def eql?(phone)
-      self.class == phone.class
+      return false unless Phone === phone
+      name == phone.name
+    end
+
+    def hash
+      "#{self.class}:#{name}".hash
+    end
+
+    def inspect
+      name
     end
 
     def short?
-      SHORT_VOWELS.include? symbol
+      SHORT_VOWELS.include? name
     end
 
     def syllabic?
@@ -63,24 +70,12 @@ module Pronounce
     end
 
     def to_s
-      "#{symbol}#{stress}"
+      "#{name}#{stress}"
     end
 
     protected
 
-    def <=>(phone)
-      self.articulation <=> phone.articulation if Phone === phone
-    end
-
-    def articulation
-      self.class.articulation
-    end
-
-    private
-
-    def symbol
-      self.class.name.split('::').last
-    end
+    attr_reader :name
 
   end
 end
