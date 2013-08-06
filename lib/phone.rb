@@ -16,7 +16,7 @@ module Pronounce
         }
       end
 
-      def create(symbol)
+      def new(symbol)
         name = symbol[0..1]
         if phone_constructors.has_key? name
           phone_constructors[name].call symbol[2]
@@ -30,8 +30,16 @@ module Pronounce
       def phone_constructors
         @fns ||= DataReader.phones.each_with_object({}) {|line, fns|
           name, articulation = *line.strip.split("\t")
-          fns[name] = ->(stress) { Phone.new name, articulation, stress }
+          fns[name] = phone_constructor_fn name, articulation
         }
+      end
+
+      def phone_constructor_fn(name, articulation)
+        ->(stress) do
+          phone = allocate
+          phone.send :initialize, name, articulation, stress
+          phone
+        end
       end
 
     end

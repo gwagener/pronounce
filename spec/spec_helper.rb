@@ -2,7 +2,7 @@ require 'phone'
 require 'syllable'
 
 def make_phones(phones)
-  phones.map {|phone| Pronounce::Phone.create phone }
+  phones.map {|phone| Pronounce::Phone.new phone }
 end
 
 def make_syllable(phones)

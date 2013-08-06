@@ -13,8 +13,8 @@ module Pronounce
 
       it { should be_word_beginning }
       it { should_not be_word_end }
-      its(:current_phone) { should eq Phone.create 'AE' }
-      its(:next_phone) { should eq Phone.create 'N' }
+      its(:current_phone) { should eq Phone.new 'AE' }
+      its(:next_phone) { should eq Phone.new 'N' }
       its(:previous_phone) { should be_nil }
     end
 
@@ -23,9 +23,9 @@ module Pronounce
 
       it { should_not be_word_beginning }
       it { should_not be_word_end }
-      its(:current_phone) { should eq Phone.create 'N' }
-      its(:next_phone) { should eq Phone.create 'D' }
-      its(:previous_phone) { should eq Phone.create 'AE' }
+      its(:current_phone) { should eq Phone.new 'N' }
+      its(:next_phone) { should eq Phone.new 'D' }
+      its(:previous_phone) { should eq Phone.new 'AE' }
     end
 
     context 'for the last phone' do
@@ -33,9 +33,9 @@ module Pronounce
 
       it { should_not be_word_beginning }
       it { should be_word_end }
-      its(:current_phone) { should eq Phone.create 'AH' }
+      its(:current_phone) { should eq Phone.new 'AH' }
       its(:next_phone) { should be_nil }
-      its(:previous_phone) { should eq Phone.create 'D' }
+      its(:previous_phone) { should eq Phone.new 'D' }
     end
 
     describe '#pending_syllable' do
