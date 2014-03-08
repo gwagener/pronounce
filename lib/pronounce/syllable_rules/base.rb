@@ -4,7 +4,9 @@ module Pronounce::SyllableRules
     verbatim do |context|
       return :new_syllable if context.current_phone.syllabic? && !context.previous_phone_in_onset?
       return :no_new_syllable if context.word_end?
-      (context.previous_phone_in_coda? || context.sonority_trough?) ? :new_syllable : :no_new_syllable
+      (context.sonority_trough? ||
+        (context.previous_phone < context.current_phone &&
+          context.previous_phone_in_coda?)) ? :new_syllable : :no_new_syllable
     end
   end
 
