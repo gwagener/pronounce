@@ -40,4 +40,16 @@ module Pronounce::SyllableRules
     end
   end
 
+  rule :en, 'silibant final cluster codas' do
+    verbatim do |context|
+      if context.pending_coda.length >= 2 &&
+        (context.next_phone.eql?(::Pronounce::Phone.new('S')) ||
+          context.next_phone.eql?(::Pronounce::Phone.new('Z')))
+        :no_new_syllable
+      else
+        :not_applicable
+      end
+    end
+  end
+
 end
