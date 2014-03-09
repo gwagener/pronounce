@@ -38,14 +38,14 @@ module Pronounce
       its(:previous_phone) { should eq Phone.new 'D' }
     end
 
-    describe '#current_onset' do
+    describe '#pending_onset' do
       let(:phones) { make_phones %w[S P R AE1 NG] } # sprang
 
       context 'at the start of an onset' do
         let(:index) { 0 }
 
         it 'returns the whole onset' do
-          expect(subject.current_onset).to eq make_phones(%w[S P R])
+          expect(subject.pending_onset).to eq make_phones(%w[S P R])
         end
       end
 
@@ -53,7 +53,7 @@ module Pronounce
         let(:index) { 1 }
 
         it 'returns the whole onset' do
-          expect(subject.current_onset).to eq make_phones(%w[S P R])
+          expect(subject.pending_onset).to eq make_phones(%w[S P R])
         end
       end
 
@@ -61,7 +61,7 @@ module Pronounce
         let(:index) { 2 }
 
         it 'returns the whole onset' do
-          expect(subject.current_onset).to eq make_phones(%w[S P R])
+          expect(subject.pending_onset).to eq make_phones(%w[S P R])
         end
       end
 
@@ -71,7 +71,7 @@ module Pronounce
         let(:index) { 3 }
 
         it 'that phone is not included' do
-          expect(subject.current_onset).to eq make_phones(%w[S P L])
+          expect(subject.pending_onset).to eq make_phones(%w[S P L])
         end
       end
 
@@ -80,7 +80,7 @@ module Pronounce
         let(:index) { 2 }
 
         it 'that phone is not included' do
-          expect(subject.current_onset).to eq make_phones(%w[S P L])
+          expect(subject.pending_onset).to eq make_phones(%w[S P L])
         end
       end
 
@@ -89,7 +89,7 @@ module Pronounce
         let(:index) { 3 }
 
         it 'returns an empty array' do
-          expect(subject.current_onset).to eq []
+          expect(subject.pending_onset).to eq []
         end
       end
 
@@ -97,7 +97,7 @@ module Pronounce
         let(:index) { 3 }
 
         it 'returns an empty array' do
-          expect(subject.current_onset).to eq []
+          expect(subject.pending_onset).to eq []
         end
       end
 
@@ -106,7 +106,7 @@ module Pronounce
         let(:index) { 6 }
 
         it 'returns the whole onset' do
-          expect(subject.current_onset).to eq make_phones(%w[W])
+          expect(subject.pending_onset).to eq make_phones(%w[W])
         end
       end
     end

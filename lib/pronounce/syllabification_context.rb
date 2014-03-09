@@ -8,11 +8,6 @@ module Pronounce
       @phone_index = phone_index
     end
 
-    def current_onset
-      return [] if phones[phone_index].syllabic? || next_vowel_index == nil
-      phones.slice(valid_syllables_length...next_vowel_index)
-    end
-
     def current_phone
       phones[phone_index]
     end
@@ -25,8 +20,13 @@ module Pronounce
       phones[phone_index - 1] unless word_beginning?
     end
 
+    def pending_onset
+      return [] if phones[phone_index].syllabic? || next_vowel_index == nil
+      phones.slice(valid_syllables_length...next_vowel_index)
+    end
+
     def pending_syllable
-      Syllable.new(phones.slice(completed_length...phone_index))
+      Syllable.new(phones.slice(pending_syllable_start...phone_index))
     end
 
     def previous_phone_in_coda?
@@ -53,12 +53,12 @@ module Pronounce
 
     attr_reader :completed_syllables, :phones, :phone_index
 
-    def completed_length
+    def pending_syllable_start
       completed_syllables.map(&:length).reduce(0, :+)
     end
 
     def next_vowel_index
-      next_vowel = phones.slice(phone_index...phones.length).find &:syllabic?
+      next_vowel = phones.slice(phone_index...phones.length).find(&:syllabic?)
       phones.find_index {|phone| next_vowel.equal? phone }
     end
 
@@ -67,7 +67,7 @@ module Pronounce
     end
 
     def valid_syllables_length
-      completed_length + valid_pending_syllable_length
+      pending_syllable_start + valid_pending_syllable_length
     end
 
   end

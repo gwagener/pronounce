@@ -4,7 +4,7 @@ module Pronounce::SyllableRules
   class RuleEvaluation
     class << self
       def result_for(definition, context)
-        new(context).instance_eval &definition
+        new(context).instance_eval(&definition)
       end
 
       private :new
@@ -17,28 +17,26 @@ module Pronounce::SyllableRules
     ## DSL #############
 
     def verbatim(&block)
-      VerbatimDefinition.new(block).evaluate context
+      VerbatimDefinition.new(block).evaluate(context)
     end
 
     #### subjects ######
 
     def onset(predicate)
-      return :not_applicable if context.current_onset == []
-      predicate.call context.current_onset
+      return :not_applicable if context.pending_onset == []
+      predicate.call(context.pending_onset)
     end
 
     def syllable(predicate)
-      predicate.call context.pending_syllable
+      predicate.call(context.pending_syllable)
     end
 
     #### predicates ####
 
     def cannot_be(*objects)
       lambda {|subject|
-        if interogative_method_names(objects).all? {|method_name|
-          subject.send method_name
-        }
-          :no_new_syllable 
+        if objects.all? {|interogative| subject.send("#{interogative}?") }
+          :no_new_syllable
         else
           :not_applicable
         end
@@ -60,10 +58,6 @@ module Pronounce::SyllableRules
     private
 
     attr_reader :context
-
-    def interogative_method_names(interogatives)
-      interogatives.map {|interogative| "#{interogative}?" }
-    end
 
   end
 end
