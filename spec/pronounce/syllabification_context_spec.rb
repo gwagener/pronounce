@@ -38,6 +38,42 @@ module Pronounce
       its(:previous_phone) { should eq Phone.new 'D' }
     end
 
+    describe '#pending_coda' do
+      let(:phones) { make_phones %w[HH AE1 G L AH0 N D] } # Hagglund
+
+      context 'on a medial coda' do
+        let(:index) { 2 }
+
+        it 'returns everything between the previous vowel and the next vowel' do
+          expect(subject.pending_coda).to eq make_phones(%w[G L])
+        end
+      end
+
+      context 'on the final coda' do
+        let(:index) { 6 }
+
+        it 'returns everything after the previous vowel' do
+          expect(subject.pending_coda).to eq make_phones(%w[N D])
+        end
+      end
+
+      context 'on an initial onset' do
+        let(:index) { 0 }
+
+        it 'returns an empty array' do
+          expect(subject.pending_coda).to eq []
+        end
+      end
+
+      context 'on a vowel' do
+        let(:index) { 4 }
+
+        it 'returns an empty array' do
+          expect(subject.pending_coda).to eq []
+        end
+      end
+    end
+
     describe '#pending_onset' do
       let(:phones) { make_phones %w[S P R AE1 NG] } # sprang
 

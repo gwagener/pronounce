@@ -20,6 +20,11 @@ module Pronounce
       phones[phone_index - 1] unless word_beginning?
     end
 
+    def pending_coda
+      return [] if phones[phone_index].syllabic? || previous_vowel_index == nil
+      phones.slice(previous_vowel_index + 1...next_vowel_index || phones.length)
+    end
+
     def pending_onset
       return [] if phones[phone_index].syllabic? || next_vowel_index == nil
       phones.slice(valid_syllables_length...next_vowel_index)
@@ -60,6 +65,11 @@ module Pronounce
     def next_vowel_index
       next_vowel = phones.slice(phone_index...phones.length).find(&:syllabic?)
       phones.find_index {|phone| next_vowel.equal? phone }
+    end
+
+    def previous_vowel_index
+      previous_vowel = phones.slice(0...phone_index).reverse.find(&:syllabic?)
+      phones.find_index {|phone| previous_vowel.equal? phone }
     end
 
     def valid_pending_syllable_length
