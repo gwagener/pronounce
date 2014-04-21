@@ -1,9 +1,9 @@
 require 'pronounce/syllable_rules/verbatim_definition'
 
 module Pronounce::SyllableRules
-  class RuleEvaluation
+  class RuleLanguage
     class << self
-      def result_for(definition, context)
+      def run(definition, context)
         new(context).instance_eval &definition
       end
 
@@ -38,7 +38,7 @@ module Pronounce::SyllableRules
         if interogative_method_names(objects).all? {|method_name|
           subject.send method_name
         }
-          :no_new_syllable 
+          :no_new_syllable
         else
           :not_applicable
         end

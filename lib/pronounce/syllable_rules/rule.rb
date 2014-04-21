@@ -1,4 +1,4 @@
-require 'pronounce/syllable_rules/rule_evaluation'
+require 'pronounce/syllable_rules/rule_language'
 
 module Pronounce::SyllableRules
   class Rule
@@ -7,7 +7,7 @@ module Pronounce::SyllableRules
     end
 
     def evaluate(context)
-      RuleEvaluation.result_for definition, context
+      RuleLanguage.run(definition, context)
     end
 
     private
