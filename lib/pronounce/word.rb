@@ -38,7 +38,7 @@ module Pronounce
 
     def new_syllable?(context)
       return false if context.word_beginning?
-      SyllableRules.evaluate(context) == :new_syllable
+      SyllableRules.evaluate(context).value == :new_syllable
     end
 
   end

@@ -9,7 +9,7 @@ module Pronounce
       it 'takes a name and a block' do
         result = :new_syllable
         SyllableRules.rule(rule_name) { result }
-        expect(SyllableRules[rule_name].evaluate(nil)).to eq result
+        expect(SyllableRules[rule_name].evaluate(nil).value).to eq result
 
         # clean up
         SyllableRules.rule(rule_name) { :not_applicable }
@@ -18,7 +18,7 @@ module Pronounce
       it 'can take an arbitrary length path' do
         result = :new_syllable
         SyllableRules.rule(set_name, rule_name) { result }
-        expect(SyllableRules[set_name][rule_name].evaluate(nil)).to eq result
+        expect(SyllableRules[set_name][rule_name].evaluate(nil).value).to eq result
 
         # clean up
         SyllableRules.rule(set_name, rule_name) { :not_applicable }

@@ -8,11 +8,10 @@ module Pronounce
     describe 'doublet onsets' do
       subject do
         phones = make_phones(raw_phones)
-        context = Pronounce::SyllabificationContext.new(syllables, phones, index)
-        SyllableRules[:en]['doublet onsets'].evaluate(context)
+        context = Pronounce::SyllabificationContext.new([], phones, index)
+        SyllableRules[:en]['doublet onsets'].evaluate(context).value
       end
 
-      let(:syllables) { [] }
       let(:index) { 1 }
 
       context 'for a stop or voiceless fricative' do

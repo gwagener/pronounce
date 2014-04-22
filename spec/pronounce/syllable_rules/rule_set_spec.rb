@@ -29,7 +29,7 @@ module Pronounce::SyllableRules
         rule_set.add([:lang, 'NA'], Rule.new { :not_applicable })
         rule_set.add([:lang, 'highest'], Rule.new { result })
         rule_set.add([:base, 'base'], Rule.new { :new_syllable })
-        expect(rule_set.evaluate(context)).to eq result
+        expect(rule_set.evaluate(context).value).to eq result
       end
     end
 

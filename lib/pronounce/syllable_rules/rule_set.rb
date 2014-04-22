@@ -8,6 +8,7 @@ module Pronounce::SyllableRules
     def_delegators :rules, :[]
 
     def initialize(name)
+      @set_name = name
       @rules = {}
     end
 
@@ -22,12 +23,13 @@ module Pronounce::SyllableRules
     end
 
     def evaluate(context)
-      rules.map {|key, rule| RuleResult.new(key, rule.evaluate(context)) }.max.value
+      result_value = rules.values.map { |rule| rule.evaluate(context) }.max.value
+      RuleResult.new(set_name, result_value)
     end
 
     private
 
-    attr_reader :rules
+    attr_reader :rules, :set_name
 
     def ensure_rule_set_exists(name)
       rules[name] = RuleSet.new(name) unless rules.has_key? name

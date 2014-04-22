@@ -11,7 +11,7 @@ module Pronounce
       subject do
         phones = make_phones(raw_phones)
         context = Pronounce::SyllabificationContext.new([], phones, index)
-        SyllableRules[:en]['/ng/ cannot start a syllable'].evaluate(context)
+        SyllableRules[:en]['/ng/ cannot start a syllable'].evaluate(context).value
       end
 
       let(:raw_phones) { %w[AA B NG EH NG ER M OW] }

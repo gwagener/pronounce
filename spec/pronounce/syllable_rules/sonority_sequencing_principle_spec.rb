@@ -10,7 +10,7 @@ module Pronounce
         phones = make_phones(raw_phones)
         syllables = raw_syllables.map { |raw| make_syllable(raw) }
         context = Pronounce::SyllabificationContext.new syllables, phones, index
-        SyllableRules[:base]['Sonority Sequencing Principle'].evaluate context
+        SyllableRules[:base]['Sonority Sequencing Principle'].evaluate(context).value
       end
 
       let(:raw_syllables) { [] }
