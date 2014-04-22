@@ -1,4 +1,5 @@
 require 'pronounce/syllable_rules/rule_language'
+require 'pronounce/syllable_rules/rule_result'
 
 module Pronounce::SyllableRules
   class Rule
