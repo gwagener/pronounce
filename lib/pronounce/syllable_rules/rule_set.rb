@@ -7,15 +7,15 @@ module Pronounce::SyllableRules
 
     def_delegators :rules, :[]
 
-    def initialize
+    def initialize(name)
       @rules = {}
     end
 
     def add(path, rule)
       name, *nested_path = path
       if nested_path.any?
-        ensure_rule_set_exists name
-        rules[name].add nested_path, rule
+        ensure_rule_set_exists(name)
+        rules[name].add(nested_path, rule)
       else
         rules[name] = rule
       end
@@ -30,7 +30,7 @@ module Pronounce::SyllableRules
     attr_reader :rules
 
     def ensure_rule_set_exists(name)
-      rules[name] = RuleSet.new unless rules.has_key? name
+      rules[name] = RuleSet.new(name) unless rules.has_key? name
     end
 
   end

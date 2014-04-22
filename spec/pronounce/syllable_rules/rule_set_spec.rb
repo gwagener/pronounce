@@ -3,7 +3,7 @@ require 'pronounce/syllable_rules/rule_set'
 
 module Pronounce::SyllableRules
   describe RuleSet do
-    let(:rule_set) { RuleSet.new }
+    let(:rule_set) { RuleSet.new(:top) }
 
     describe 'rules' do
       let(:rule_name) { 'name' }
