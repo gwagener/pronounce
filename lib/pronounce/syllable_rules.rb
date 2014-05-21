@@ -6,7 +6,7 @@ module Pronounce::SyllableRules
   class << self
     extend Forwardable
 
-    def_delegators :rules, :[], :evaluate
+    def_delegators :rules, :[], :delete, :evaluate
 
     def rule(*path, &block)
       rules.add(path, Rule.new(&block))

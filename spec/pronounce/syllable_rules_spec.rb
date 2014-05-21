@@ -11,8 +11,7 @@ module Pronounce
         SyllableRules.rule(rule_name) { result }
         expect(SyllableRules[rule_name].evaluate(nil).value).to eq result
 
-        # clean up
-        SyllableRules.rule(rule_name) { :not_applicable }
+        SyllableRules.delete(rule_name)
       end
 
       it 'can take an arbitrary length path' do
@@ -20,8 +19,7 @@ module Pronounce
         SyllableRules.rule(set_name, rule_name) { result }
         expect(SyllableRules[set_name][rule_name].evaluate(nil).value).to eq result
 
-        # clean up
-        SyllableRules.rule(set_name, rule_name) { :not_applicable }
+        SyllableRules.delete(set_name)
       end
     end
 

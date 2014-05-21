@@ -5,7 +5,7 @@ module Pronounce::SyllableRules
   class RuleSet
     extend Forwardable
 
-    def_delegators :rules, :[]
+    def_delegators :rules, :[], :delete
 
     def initialize(name)
       @set_name = name
