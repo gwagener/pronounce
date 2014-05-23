@@ -8,7 +8,7 @@ module Pronounce::SyllableRules
     end
 
     def evaluate(context)
-      RuleResult.new(nil, RuleLanguage.run(definition, context))
+      RuleResult.new(RuleLanguage.run(definition, context))
     end
 
     private

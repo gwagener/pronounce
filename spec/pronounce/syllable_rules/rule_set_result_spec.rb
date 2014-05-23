@@ -16,7 +16,7 @@ module Pronounce::SyllableRules
         expect(RuleSetResult.new(:lang, :not_applicable)).to be < RuleSetResult.new(:base, :no_new_syllable)
       end
 
-      it 'fails when trying to compare to a non-RuleResult' do
+      it 'fails when trying to compare to a non-RuleSetResult' do
         expect { RuleSetResult.new(:lang, :new_syllable) > :no_new_syllable }.to raise_error ArgumentError
       end
     end
