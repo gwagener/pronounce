@@ -23,8 +23,7 @@ module Pronounce::SyllableRules
     end
 
     def evaluate(context)
-      result_value = rules.values.map { |rule| rule.evaluate(context) }.max.value
-      RuleSetResult.new(set_name, result_value)
+      RuleSetResult.new(set_name, rule_results(context).max.value)
     end
 
     private
@@ -33,6 +32,10 @@ module Pronounce::SyllableRules
 
     def ensure_rule_set_exists(name)
       rules[name] = RuleSet.new(name) unless rules.has_key? name
+    end
+
+    def rule_results(context)
+      rules.values.map { |rule| rule.evaluate(context) }
     end
 
   end
