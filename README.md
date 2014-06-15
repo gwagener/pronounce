@@ -1,7 +1,7 @@
 # Pronounce
 
-[![Build Status](https://travis-ci.org/josephwilk/pronounce.png?branch=master)](https://travis-ci.org/josephwilk/pronounce)
-
+[![Build Status](https://travis-ci.org/josephwilk/pronounce.svg?branch=master)](https://travis-ci.org/josephwilk/pronounce)
+[![Coverage Status](https://img.shields.io/coveralls/josephwilk/pronounce.svg)](https://coveralls.io/r/josephwilk/pronounce)
 
 Break words up into their <a href="http://en.wikipedia.org/wiki/Syllable">syllables</a> and <a href="http://en.wikipedia.org/wiki/Phone_(phonetics)">phones</a>.
 
@@ -56,6 +56,6 @@ end
 
 ## Ruby Support
 
-* MRI 1.9+
-* JRuby 1.7.5 (1.9 mode only)
-* Rubinius 2.1
+* MRI 1.9.3+
+* JRuby 1.7.5+ (1.9 mode only)
+* Rubinius 2.2.6

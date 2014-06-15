@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 require 'spec_helper'
+require 'spec_helper_methods'
 require 'pronounce/syllabification_context'
 require 'pronounce/syllable_rules'
 require 'pronounce/syllable_rules/english'
@@ -18,17 +19,17 @@ module Pronounce
 
       context '/ŋ/ in a cluster' do
         let(:index) { 2 }
-        it { should be :no_new_syllable }
+        it { is_expected.to be :no_new_syllable }
       end
 
       context 'single /ŋ/' do
         let(:index) { 4 }
-        it { should be :no_new_syllable }
+        it { is_expected.to be :no_new_syllable }
       end
 
       context 'other nasals' do
         let(:index) { 6 }
-        it { should be :not_applicable }
+        it { is_expected.to be :not_applicable }
       end
 
     end
