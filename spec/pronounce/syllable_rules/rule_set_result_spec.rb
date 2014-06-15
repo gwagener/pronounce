@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'pronounce/syllable_rules/rule_set_result'
 
 module Pronounce::SyllableRules
