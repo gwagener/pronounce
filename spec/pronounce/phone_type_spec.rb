@@ -16,7 +16,8 @@ module Pronounce
       end
 
       it 'fails when trying to compare to a non-PhoneType object' do
-        expect { PhoneType['P'] < 'CH' }.to raise_error ArgumentError
+        type = PhoneType['P']
+        expect { type < 'CH' }.to raise_error ArgumentError
       end
     end
 

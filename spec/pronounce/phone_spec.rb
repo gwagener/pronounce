@@ -18,7 +18,8 @@ module Pronounce
       end
 
       it 'fails when trying to compare to a non-Phone' do
-        expect { Phone.new('P') < 'CH' }.to raise_error ArgumentError
+        phone = Phone.new('P')
+        expect { phone < 'CH' }.to raise_error ArgumentError
       end
     end
 

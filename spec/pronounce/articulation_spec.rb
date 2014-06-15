@@ -16,7 +16,8 @@ module Pronounce
       end
 
       it 'fails when trying to compare to a non-Articulation object' do
-        expect { Articulation[:stop] < :fricative }.to raise_error ArgumentError
+        articulation = Articulation[:stop]
+        expect { articulation < :fricative }.to raise_error ArgumentError
       end
     end
 
